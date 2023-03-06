@@ -11,7 +11,8 @@
 </ul>
 
 <h2>Comments</h2>
-<%= render @article.comments %>
+<%= link_to "Comments", article_comments_path(@article) %>
+<!-- <%= render @article.comments %> -->
 
 <h2>Add a comment:</h2>
 <%= render 'comments/form' %>
