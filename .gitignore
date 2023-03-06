@@ -27,6 +27,7 @@
 !/storage/.keep
 /tmp/storage/*
 !/tmp/storage/
+!/tmp/cache/
 !/tmp/storage/.keep
 
 /public/assets

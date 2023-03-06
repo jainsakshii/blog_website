@@ -1,11 +1,11 @@
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+  http_basic_authenticate_with name: "sakshi jain", password: "secret123", except: [:index, :show]
+  before_action :set_article, only: [:edit,:update,:show,:destroy]
   def index
     @articles = Article.all
   end
 
   def show
-    @article = Article.find(params[:id])
   end
 
   def new
@@ -14,7 +14,6 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-
     if @article.save
       redirect_to @article
     else
@@ -23,12 +22,9 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
   end
 
-  def update
-    @article = Article.find(params[:id])
-
+  def update 
     if @article.update(article_params)
       redirect_to @article
     else
@@ -37,7 +33,6 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
 
     redirect_to root_path, status: :see_other
@@ -47,4 +42,10 @@ class ArticlesController < ApplicationController
     def article_params
       params.require(:article).permit(:title, :body, :status)
     end
+    def set_article
+      @article = Article.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => error 
+      render :new, status: :unprocessable_entity
+    end
+
 end

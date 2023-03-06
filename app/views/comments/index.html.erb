@@ -1,0 +1,29 @@
+<h2>All comments for  <%= @name %> </h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> User</th>
+      <th> Comment</th>
+      <th> Show </th>
+      <th> Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @article.comments.each do |comment| %>
+      <tr>
+        <td><%= comment.commenter %></td>
+        <td><%= comment.body %></td>
+        <td> <%= link_to "Show", [comment.article, comment] %> </td>
+        <td><%= link_to "Delete", [comment.article, comment], data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"
+                } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+
+<%= link_to "Back To Article", (@article)%>
