@@ -1,4 +1,4 @@
-<%= form_with model: article do |form| %>
+<!--<%= form_with model: article do |form| %>
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
@@ -6,7 +6,6 @@
       <div><%= message %></div>
     <% end %>
   </div>
-
   <div>
     <%= form.label :body %><br>
     <%= form.text_area :body %><br>
@@ -17,10 +16,47 @@
   <div>
     <%= form.label :status %><br>
     <%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %>
-  </div>
+  </div> 
+    <%= link_to_add_nested(form, :comments, '#comments') %>
+    <div id='comments'>
+    <%=form.fields_for :comments do |comment| %>
+      <%= render 'comment_fields', form: comment %>
+    <% end %>
+    </div>
 
-  
   <div>
     <%= form.submit %>
   </div>
+<% end %>-->
+
+
+<!--<h1> Form Tag</h1>
+<%= form_tag("/search", :method => "get") do %>
+   <%= label_tag(:q, "Search:") %>
+   <%= text_field_tag(:q) %>
+   <%= submit_tag("Search") %>
+<% end %>-->
+
+
+<h1> FORM for </h1>
+<%= form_for article do |f| %>
+   <%= f.label :title %>
+   <%= f.text_field :title %>
+   <%= f.label :body %>
+   <%= f.text_field :body %>
+   <br>
+    <%= f.label :status %><br>
+   <%= f.select :status, ['public', 'private', 'archived'], selected: 'public' %>
+   <br>
+     <%= link_to_add_nested(f, :comments, "#comments") %>
+   <div id='comments'>
+      <%= f.fields_for :comments do |comment|%>
+        <div class="wrapper-div">
+          <%= comment.text_field :commenter %>
+          <%= comment.text_field :body %>
+          <%= link_to_remove_nested(f) %>
+        </div>
+      <% end %>
+    </div>
+   <%= f.submit %>
 <% end %>

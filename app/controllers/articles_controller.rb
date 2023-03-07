@@ -10,6 +10,7 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
+    @article.comments.build
   end
 
   def create
@@ -40,12 +41,12 @@ class ArticlesController < ApplicationController
 
   private
     def article_params
-      params.require(:article).permit(:title, :body, :status)
+      params.require(:article).permit(:title, :body, :status, comments_attributes: [:commenter, :body])
     end
     def set_article
       @article = Article.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => error 
-      render :new, status: :unprocessable_entity
+    rescue ActiveRecord::RecordNotFound => error
+      render plain: "Article id " + params[:id] + " doesn't exist."
+      #render file: "#{Rails.root}/public/404.html"
     end
-
-end
+  end
